@@ -102,7 +102,7 @@ vim.g.have_nerd_font = false
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
+vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
@@ -198,6 +198,15 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set('i', '<C-c>', '<Esc>', { desc = 'Mimic <Esc> function with ctrl+C' })
+
+vim.keymap.set({ 'v', 'n' }, '<leader>y', [["+y]], { desc = 'Yank to clipboard with <leader>y' })
+vim.keymap.set('n', '<leader>Y', 'ggVG' .. [["+y]], { desc = 'Yank entire file to clipboard with <leader>Y' })
+
+vim.keymap.set('n', 'Q', '<nop>', { desc = 'Disable captial Q' })
+
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Center after page down' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Center after page up' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -368,7 +377,7 @@ require('lazy').setup({
 
         -- `build` is used to run some command when the plugin is installed/updated.
         -- This is only run then, not every time Neovim starts up.
-        build = 'make',
+        build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
 
         -- `cond` is a condition used to determine whether this plugin should be
         -- installed and loaded.
@@ -1014,3 +1023,4 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
