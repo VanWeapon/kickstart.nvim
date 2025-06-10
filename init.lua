@@ -692,6 +692,7 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
+        zls = {},
 
         lua_ls = {
           -- cmd = { ... },
@@ -866,6 +867,12 @@ require('lazy').setup({
         default = { 'lsp', 'path', 'snippets', 'lazydev' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          cmdline = {
+            -- ignores cmdline completions because of wsl being fucky
+            enabled = function()
+              return vim.fn.getcmdtype() ~= ':' or not vim.fn.getcmdline():match "^[%%0-9,'<>%-]*!"
+            end,
+          },
         },
       },
 
@@ -1024,3 +1031,4 @@ require('lazy').setup({
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
+vim.keymap.set({ 'n', 't' }, '<C-t>', '<cmd>Floaterminal<CR>')
